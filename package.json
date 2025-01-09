@@ -5,16 +5,16 @@
     "type": "module",
     "scripts": {
         "build": "remix vite:build",
-        "dev": "concurrently \"npm run sass\" \"remix vite:dev\"",
+        "dev": "remix vite:dev",
         "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
         "start": "remix-serve ./build/server/index.js",
-        "typecheck": "tsc",
-        "sass": "sass --watch app/:app/"
+        "typecheck": "tsc"
     },
     "dependencies": {
         "@remix-run/node": "^2.15.2",
         "@remix-run/react": "^2.15.2",
         "@remix-run/serve": "^2.15.2",
+        "axios": "^1.7.9",
         "isbot": "^4.1.0",
         "jotai": "^2.11.0",
         "react": "^18.2.0",

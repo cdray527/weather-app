@@ -1,6 +1,6 @@
-import React, { ReactNode, useEffect } from 'react';
+import React, { ReactNode } from 'react';
 import { useAtom } from 'jotai';
-import { themeState } from '~/atoms/themeState';
+import { themeState } from '@/utils/atoms/themeState';
 
 export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [theme] = useAtom(themeState);

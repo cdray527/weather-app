@@ -1,5 +1,5 @@
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
-import { ThemeProvider } from '~/providers/ThemeProvider';
+import { ThemeProvider } from '@/utils/providers/ThemeProvider';
 import type { LinksFunction } from '@remix-run/node';
 
 import './tailwind.css';
