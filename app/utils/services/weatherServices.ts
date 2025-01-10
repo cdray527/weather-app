@@ -7,9 +7,9 @@ export const mapWeatherResponse = (data: any) => {
     const id = data.id;
     const city = data.name;
     const country = data.sys.country;
-    const temp = Math.round(data.main.temp - 273.15);
-    const maxTemp = Math.round(data.main.temp_max - 273.15);
-    const minTemp = Math.round(data.main.temp_min - 273.15);
+    const temp = Math.round(data.main.temp);
+    const maxTemp = Math.round(data.main.temp_max);
+    const minTemp = Math.round(data.main.temp_min);
     const weather = data.weather[0]?.main;
     const humidity = data.main.humidity;
     const timestamp = new Date().toLocaleString();
@@ -33,7 +33,8 @@ export const getWeatherByCityCountry = async (cityName: string) => {
         const response = await axios.get('https://api.openweathermap.org/data/2.5/weather', {
             params: {
                 q: cityName,
-                appid: API_KEY
+                appid: API_KEY,
+                units: 'metric'
             }
         });
 

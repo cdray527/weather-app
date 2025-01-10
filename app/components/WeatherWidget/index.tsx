@@ -15,7 +15,6 @@ const WeatherWidget = () => {
     const defaultSearchInput = urlParams.get('q') || ''; // Get the default search input from the url query param
     const { addWeatherData } = useWeatherState();
 
-    // Handle the form submission logic
     const handleSubmit = async (
         searchInput: string,
         setLoading: Dispatch<SetStateAction<boolean>>,
@@ -28,7 +27,6 @@ const WeatherWidget = () => {
             const data = await getWeatherByCityCountry(searchInput);
             const newWeatherData = mapWeatherResponse(data);
 
-            // Add or update the weather data in the state
             addWeatherData(newWeatherData);
 
             // Navigate to the search results with query parameter

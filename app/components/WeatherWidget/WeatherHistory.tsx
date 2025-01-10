@@ -1,12 +1,11 @@
-import { useAtom } from 'jotai';
 import WeatherHistoryItem from './WeatherHistoryItem';
-import { weatherHistoryState } from '@/utils/atoms/weatherState';
+import { useWeatherState } from '@/utils/hooks/useWeatherState';
 import cn from 'classnames';
 import styles from './WeatherWidget.module.scss';
-import { IWeatherHistoryItem } from '@/utils/interface/weatherHistoryItem';
+import { IWeatherHistoryItem } from '@/utils/interface/IWeatherHistoryItem';
 
 const WeatherHistory = () => {
-    const [weatherData] = useAtom(weatherHistoryState);
+    const { weatherHistory } = useWeatherState();
 
     return (
         <div
@@ -16,9 +15,9 @@ const WeatherHistory = () => {
             )}
         >
             <span className="text-tertiary">Search History</span>
-            {weatherData.length !== 0 && (
+            {weatherHistory.length !== 0 && (
                 <ul>
-                    {weatherData.map((item: IWeatherHistoryItem) => (
+                    {weatherHistory.map((item: IWeatherHistoryItem) => (
                         <WeatherHistoryItem key={item.id} data={item} />
                     ))}
                 </ul>

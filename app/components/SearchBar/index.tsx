@@ -26,7 +26,7 @@ const SearchBar = ({ defaultSearchInput, onSubmit }: Props) => {
             <div className="flex items-center">
                 <input
                     type="text"
-                    placeholder="Search City"
+                    placeholder="Search City, Country"
                     value={searchInput}
                     onChange={(e) => setSearchInput(e.target.value)}
                     name="q"

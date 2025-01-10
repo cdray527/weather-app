@@ -1,15 +1,38 @@
-import { useEffect, useMemo } from 'react';
-import { useAtom } from 'jotai';
-import { weatherHistoryState, currentWeatherIdState } from '@/utils/atoms/weatherState';
-import { IWeatherHistoryItem } from '@/utils/interface/weatherHistoryItem';
+import { useMemo, useEffect } from 'react';
+import { useAtom, useAtomValue } from 'jotai';
+import { selectAtom } from 'jotai/utils';
+import { weatherHistoryAtom, currentWeatherIdAtom } from '@/utils/atoms/weatherState';
+import { IWeatherHistoryItem } from '@/utils/interface/IWeatherHistoryItem';
 
-const WEATHER_HISTORY_KEY = 'weatherHistory';
+const WEATHER_HISTORY_STORAGE_KEY = 'weatherHistory';
 
 export const useWeatherState = () => {
-    const [weatherHistory, setWeatherHistory] = useAtom(weatherHistoryState);
-    const [currentWeatherId, setCurrentWeatherId] = useAtom(currentWeatherIdState);
+    const [weatherHistory, setWeatherHistory] = useAtom(weatherHistoryAtom);
+    const [currentWeatherId, setCurrentWeatherId] = useAtom(currentWeatherIdAtom);
+
+    // Use selectAtom to derive selectedWeatherData from
+    const selectedWeatherHistoryAtom = useMemo(() => {
+        console.log('select item:', currentWeatherId);
+        return selectAtom(
+            weatherHistoryAtom,
+            (weatherHistory) => weatherHistory.find((item) => item.id === currentWeatherId) || null
+        );
+    }, [currentWeatherId]);
+    const selectedWeatherData = useAtomValue(selectedWeatherHistoryAtom);
+
+    // Load weather history from local storage on initial load
+    useEffect(() => {
+        const savedWeatherHistory = JSON.parse(
+            localStorage.getItem(WEATHER_HISTORY_STORAGE_KEY) || '[]'
+        ) as IWeatherHistoryItem[];
+        setWeatherHistory(savedWeatherHistory);
+        if (savedWeatherHistory.length > 0) {
+            setCurrentWeatherId(savedWeatherHistory[0].id);
+        }
+    }, []);
 
     const addWeatherData = (item: IWeatherHistoryItem) => {
+        console.log('new item:', item);
         setWeatherHistory((prev) => {
             const updatedWeatherHistory = prev.map((weather) =>
                 weather.id === item.id ? item : weather
@@ -18,57 +41,44 @@ export const useWeatherState = () => {
             // If the item doesn't exist, add it else replace it
             const isNewItem = !updatedWeatherHistory.some((weather) => weather.id === item.id);
             if (isNewItem) {
-                updatedWeatherHistory.push(item);
+                updatedWeatherHistory.unshift(item);
             }
+            setCurrentWeatherId(item.id);
 
-            try {
-                localStorage.setItem(WEATHER_HISTORY_KEY, JSON.stringify(updatedWeatherHistory));
-            } catch (err) {
-                console.error('Error saving to localStorage', err);
-            }
+            localStorage.setItem(
+                WEATHER_HISTORY_STORAGE_KEY,
+                JSON.stringify(updatedWeatherHistory)
+            );
 
             return updatedWeatherHistory;
         });
     };
 
     const removeWeatherDataById = (itemId: number) => {
+        console.log('removing item:', itemId);
+
         setWeatherHistory((prev) => {
             const updatedWeatherHistory = prev.filter((item) => item.id !== itemId);
-            localStorage.setItem(WEATHER_HISTORY_KEY, JSON.stringify(updatedWeatherHistory));
+            if (currentWeatherId === itemId && updatedWeatherHistory.length > 0) {
+                setCurrentWeatherId(updatedWeatherHistory[0].id);
+            } else if (updatedWeatherHistory.length === 0) {
+                setCurrentWeatherId(null);
+            }
+
+            localStorage.setItem(
+                WEATHER_HISTORY_STORAGE_KEY,
+                JSON.stringify(updatedWeatherHistory)
+            );
+
             return updatedWeatherHistory;
         });
-
-        // If the removed item is the selected one, clear the selected state
-        if (currentWeatherId === itemId) {
-            setCurrentWeatherId(null);
-        }
     };
-
-    const selectWeatherDataById = (itemId: number) => {
-        setCurrentWeatherId(itemId);
-    };
-
-    const selectedWeatherData = useMemo(
-        () => weatherHistory.find((item) => item.id === currentWeatherId) || null,
-        [weatherHistory, currentWeatherId]
-    );
-
-    // Load weather history from local storage on initial load
-    useEffect(() => {
-        const savedWeatherHistory = JSON.parse(
-            localStorage.getItem(WEATHER_HISTORY_KEY) || '[]'
-        ) as IWeatherHistoryItem[];
-        setWeatherHistory(savedWeatherHistory);
-        if (savedWeatherHistory.length > 0) {
-            setCurrentWeatherId(savedWeatherHistory[0].id);
-        }
-    }, [setWeatherHistory]);
 
     return {
         weatherHistory,
         selectedWeatherData,
         addWeatherData,
         removeWeatherDataById,
-        selectWeatherDataById
+        setCurrentWeatherId
     };
 };

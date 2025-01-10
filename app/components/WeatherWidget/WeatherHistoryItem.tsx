@@ -1,4 +1,5 @@
-import { IWeatherHistoryItem } from '@/utils/interface/weatherHistoryItem';
+import { useState } from 'react';
+import { IWeatherHistoryItem } from '@/utils/interface/IWeatherHistoryItem';
 import Iconify from '@/components/Iconify';
 import cn from 'classnames';
 import styles from './WeatherWidget.module.scss';
@@ -9,7 +10,8 @@ interface Props {
 }
 
 const WeatherHistoryItem = ({ data }: Props) => {
-    const { removeWeatherDataById } = useWeatherState();
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const { setCurrentWeatherId, removeWeatherDataById } = useWeatherState();
 
     return (
         <li>
@@ -29,6 +31,7 @@ const WeatherHistoryItem = ({ data }: Props) => {
                             'btn text-secondary-foreground bg-transparent',
                             styles.WeatherHistoryItem__button
                         )}
+                        onClick={() => setCurrentWeatherId(data.id)}
                     >
                         <Iconify icon="mdi:magnify" width={24} />
                     </button>
@@ -37,19 +40,16 @@ const WeatherHistoryItem = ({ data }: Props) => {
                             'ml-2 btn text-secondary-foreground bg-transparent',
                             styles.WeatherHistoryItem__button
                         )}
-                        onClick={() => {
-                            const modal = document.getElementById(
-                                'confirm-delete-modal'
-                            ) as HTMLDialogElement;
-                            if (modal) {
-                                modal.showModal();
-                            }
-                        }}
+                        onClick={() => setIsDeleteModalOpen(true)}
                     >
                         <Iconify icon="mdi:delete" width={24} />
                     </button>
-                    <dialog id="confirm-delete-modal" className="modal">
-                        <div className="modal-box text-secondary-foreground bg-secondary-background">
+                    <dialog
+                        id={`confirm-delete-modal-${data.id}`}
+                        className="modal"
+                        open={isDeleteModalOpen}
+                    >
+                        <div className="modal-box text-secondary-foreground dark:text-primary-foreground bg-secondary-background">
                             <h3 className="font-bold text-lg">Confirmation</h3>
                             <p className="py-4">Do you want to remove this from history?</p>
                             <div className="modal-action">
@@ -60,7 +60,10 @@ const WeatherHistoryItem = ({ data }: Props) => {
                                     >
                                         Yes
                                     </button>
-                                    <button className="ml-2 btn text-secondary-foreground bg-secondary-background">
+                                    <button
+                                        className="ml-2 btn bg-secondary-background"
+                                        onClick={() => setIsDeleteModalOpen(false)}
+                                    >
                                         Cancel
                                     </button>
                                 </form>
