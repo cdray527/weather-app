@@ -1,9 +1,11 @@
 import React, { ReactNode, useEffect } from 'react';
 import { useAtom } from 'jotai';
-import { themeState } from '@/utils/atoms/themeState';
+import { themeAtom } from '@/utils/atoms/themeState';
 
-export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const [theme, setTheme] = useAtom(themeState);
+export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
+    children
+}) => {
+    const [theme, setTheme] = useAtom(themeAtom);
 
     useEffect(() => {
         // Default theme based on user current time

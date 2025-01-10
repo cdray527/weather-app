@@ -4,7 +4,10 @@ import SearchBar from '@/components/SearchBar';
 import WeatherHistory from './WeatherHistory';
 import WeatherInfo from './WeatherInfo';
 import { useWeatherState } from '@/utils/hooks/useWeatherState';
-import { getWeatherByCityCountry, mapWeatherResponse } from '@/utils/services/weatherServices';
+import {
+    getWeatherByCityCountry,
+    mapWeatherResponse
+} from '@/utils/services/weatherServices';
 import cn from 'classnames';
 import styles from './WeatherWidget.module.scss';
 
@@ -40,8 +43,18 @@ const WeatherWidget = () => {
 
     return (
         <div className="flex flex-col items-center">
-            <SearchBar defaultSearchInput={defaultSearchInput} onSubmit={handleSubmit} />
-            <div className={cn('p-4 mt-14 sm:p-6', styles.WeatherWidget__container)}>
+            <SearchBar
+                id="weather-widgeet-searchbar"
+                defaultSearchInput={defaultSearchInput}
+                onSubmit={handleSubmit}
+                className={styles.WeatherWidget__searchBarContainer}
+            />
+            <div
+                className={cn(
+                    'p-4 mt-14 sm:p-6',
+                    styles.WeatherWidget__container
+                )}
+            >
                 <WeatherInfo />
                 <WeatherHistory />
             </div>

@@ -1,17 +1,20 @@
 import { useState } from 'react';
+import cn from 'classnames';
 import { Form } from '@remix-run/react';
 import Iconify from '@/components/Iconify';
 
 interface Props {
+    id: string;
     defaultSearchInput: string;
     onSubmit: (
         searchInput: string,
         setLoading: React.Dispatch<React.SetStateAction<boolean>>,
         setError: React.Dispatch<React.SetStateAction<string | null>>
     ) => void;
+    className?: string;
 }
 
-const SearchBar = ({ defaultSearchInput, onSubmit }: Props) => {
+const SearchBar = ({ id, defaultSearchInput, onSubmit, className }: Props) => {
     const [searchInput, setSearchInput] = useState<string>(defaultSearchInput);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -22,9 +25,15 @@ const SearchBar = ({ defaultSearchInput, onSubmit }: Props) => {
     };
 
     return (
-        <Form method="get" onSubmit={handleFormSubmit} className="w-full max-w-lg">
+        <Form
+            id={id}
+            method="get"
+            onSubmit={handleFormSubmit}
+            className={cn('w-full', className)}
+        >
             <div className="flex items-center">
                 <input
+                    id={`${id}-input`}
                     type="text"
                     placeholder="Search City, Country"
                     value={searchInput}
@@ -33,6 +42,7 @@ const SearchBar = ({ defaultSearchInput, onSubmit }: Props) => {
                     className="input input-bordered w-full"
                 />
                 <button
+                    id={`${id}-button`}
                     type="submit"
                     disabled={loading || searchInput.length === 0}
                     className="btn text-primary-foreground bg-primary-background border-none flex items-center justify-center p-0 w-12 h-12 ml-4"

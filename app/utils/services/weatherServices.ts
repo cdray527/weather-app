@@ -30,13 +30,16 @@ export const mapWeatherResponse = (data: any) => {
 // API Docs: https://openweathermap.org/current#name
 export const getWeatherByCityCountry = async (cityName: string) => {
     try {
-        const response = await axios.get('https://api.openweathermap.org/data/2.5/weather', {
-            params: {
-                q: cityName,
-                appid: API_KEY,
-                units: 'metric'
+        const response = await axios.get(
+            'https://api.openweathermap.org/data/2.5/weather',
+            {
+                params: {
+                    q: cityName,
+                    appid: API_KEY,
+                    units: 'metric'
+                }
             }
-        });
+        );
 
         return response.data;
     } catch (error) {

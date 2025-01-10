@@ -1,4 +1,10 @@
 .WeatherWidget {
+    &__searchBarContainer {
+        max-width: 620px;
+        width: 100%;
+        min-width: 320px;
+    }
+
     &__container {
         max-width: 620px;
         width: 100%;

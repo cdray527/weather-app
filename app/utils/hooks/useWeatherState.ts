@@ -1,21 +1,26 @@
 import { useMemo, useEffect } from 'react';
 import { useAtom, useAtomValue } from 'jotai';
 import { selectAtom } from 'jotai/utils';
-import { weatherHistoryAtom, currentWeatherIdAtom } from '@/utils/atoms/weatherState';
+import {
+    weatherHistoryAtom,
+    currentWeatherIdAtom
+} from '@/utils/atoms/weatherState';
 import { IWeatherHistoryItem } from '@/utils/interface/IWeatherHistoryItem';
 
 const WEATHER_HISTORY_STORAGE_KEY = 'weatherHistory';
 
 export const useWeatherState = () => {
     const [weatherHistory, setWeatherHistory] = useAtom(weatherHistoryAtom);
-    const [currentWeatherId, setCurrentWeatherId] = useAtom(currentWeatherIdAtom);
+    const [currentWeatherId, setCurrentWeatherId] =
+        useAtom(currentWeatherIdAtom);
 
     // Use selectAtom to derive selectedWeatherData from
     const selectedWeatherHistoryAtom = useMemo(() => {
-        console.log('select item:', currentWeatherId);
         return selectAtom(
             weatherHistoryAtom,
-            (weatherHistory) => weatherHistory.find((item) => item.id === currentWeatherId) || null
+            (weatherHistory) =>
+                weatherHistory.find((item) => item.id === currentWeatherId) ||
+                null
         );
     }, [currentWeatherId]);
     const selectedWeatherData = useAtomValue(selectedWeatherHistoryAtom);
@@ -39,7 +44,9 @@ export const useWeatherState = () => {
             );
 
             // If the item doesn't exist, add it else replace it
-            const isNewItem = !updatedWeatherHistory.some((weather) => weather.id === item.id);
+            const isNewItem = !updatedWeatherHistory.some(
+                (weather) => weather.id === item.id
+            );
             if (isNewItem) {
                 updatedWeatherHistory.unshift(item);
             }
@@ -58,8 +65,13 @@ export const useWeatherState = () => {
         console.log('removing item:', itemId);
 
         setWeatherHistory((prev) => {
-            const updatedWeatherHistory = prev.filter((item) => item.id !== itemId);
-            if (currentWeatherId === itemId && updatedWeatherHistory.length > 0) {
+            const updatedWeatherHistory = prev.filter(
+                (item) => item.id !== itemId
+            );
+            if (
+                currentWeatherId === itemId &&
+                updatedWeatherHistory.length > 0
+            ) {
                 setCurrentWeatherId(updatedWeatherHistory[0].id);
             } else if (updatedWeatherHistory.length === 0) {
                 setCurrentWeatherId(null);

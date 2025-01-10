@@ -27,6 +27,7 @@ const WeatherHistoryItem = ({ data }: Props) => {
                 </div>
                 <div className="flex absolute right-3 top-2 w-auto ml-4 sm:right-0 sm:relative sm:top-0 sm:ml-4">
                     <button
+                        id={`whi-select-button-${data.id}`}
                         className={cn(
                             'btn text-secondary-foreground bg-transparent',
                             styles.WeatherHistoryItem__button
@@ -36,6 +37,7 @@ const WeatherHistoryItem = ({ data }: Props) => {
                         <Iconify icon="mdi:magnify" width={24} />
                     </button>
                     <button
+                        id={`whi-delete-button-${data.id}`}
                         className={cn(
                             'ml-2 btn text-secondary-foreground bg-transparent',
                             styles.WeatherHistoryItem__button
@@ -45,24 +47,30 @@ const WeatherHistoryItem = ({ data }: Props) => {
                         <Iconify icon="mdi:delete" width={24} />
                     </button>
                     <dialog
-                        id={`confirm-delete-modal-${data.id}`}
+                        id={`whi-confirm-delete-modal-${data.id}`}
                         className="modal"
                         open={isDeleteModalOpen}
                     >
                         <div className="modal-box text-secondary-foreground dark:text-primary-foreground bg-secondary-background">
                             <h3 className="font-bold text-lg">Confirmation</h3>
-                            <p className="py-4">Do you want to remove this from history?</p>
+                            <p className="py-4">
+                                Do you want to remove this from history?
+                            </p>
                             <div className="modal-action">
                                 <form method="dialog">
                                     <button
                                         className="btn text-primary-foreground bg-primary-background"
-                                        onClick={() => removeWeatherDataById(data.id)}
+                                        onClick={() =>
+                                            removeWeatherDataById(data.id)
+                                        }
                                     >
                                         Yes
                                     </button>
                                     <button
                                         className="ml-2 btn bg-secondary-background"
-                                        onClick={() => setIsDeleteModalOpen(false)}
+                                        onClick={() =>
+                                            setIsDeleteModalOpen(false)
+                                        }
                                     >
                                         Cancel
                                     </button>
