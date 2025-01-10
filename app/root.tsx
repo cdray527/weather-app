@@ -2,7 +2,7 @@ import { Links, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/reac
 import { ThemeProvider } from '@/utils/providers/ThemeProvider';
 import type { LinksFunction } from '@remix-run/node';
 
-import './tailwind.css';
+import '@/styles/app.scss';
 
 export const links: LinksFunction = () => [
     { rel: 'preconnect', href: 'https://fonts.googleapis.com' },

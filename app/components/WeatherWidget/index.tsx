@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
-import SearchBar from '@/components/SearchBar/SearchBar';
+import SearchBar from '@/components/SearchBar';
 import styles from './WeatherWidget.module.scss';
 import { weatherHistoryState } from '@/utils/atoms/searchState';
+import cn from 'classnames';
 import { useAtom } from 'jotai';
 
-export const WeatherWidget: React.FC = () => {
+const WeatherWidget: React.FC = () => {
     const [weatherData] = useAtom(weatherHistoryState);
 
     useEffect(() => {
@@ -12,8 +13,10 @@ export const WeatherWidget: React.FC = () => {
     }, [weatherData]);
 
     return (
-        <div className={styles.weatherWidgetLayout}>
+        <div className={cn('p-12', styles.weatherWidgetLayout)}>
             <SearchBar />
         </div>
     );
 };
+
+export default WeatherWidget;
