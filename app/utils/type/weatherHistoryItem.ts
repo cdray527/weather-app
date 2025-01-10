@@ -1,4 +1,5 @@
 export interface IWeatherHistoryItem {
+    id: number;
     city: string;
     country: string;
     temp: string;

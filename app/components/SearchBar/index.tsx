@@ -38,32 +38,30 @@ const SearchBar = () => {
     };
 
     return (
-        <div className="flex flex-col items-center space-y-4">
-            <Form method="get" onSubmit={handleSubmit} className="w-full max-w-lg">
-                <div className="flex items-center space-x-4">
-                    <input
-                        type="text"
-                        placeholder="Search City"
-                        value={searchInput}
-                        onChange={(e) => setSearchInput(e.target.value)}
-                        name="q"
-                        className="input input-bordered w-full"
-                    />
-                    <button
-                        type="submit"
-                        disabled={loading || searchInput.length === 0}
-                        className="btn btn-primary flex items-center justify-center p-0 w-12 h-12"
-                    >
-                        {loading ? (
-                            <Iconify icon="svg-spinners:180-ring" width={24} />
-                        ) : (
-                            <Iconify icon="mdi:magnify" width={32} />
-                        )}
-                    </button>
-                </div>
-            </Form>
+        <Form method="get" onSubmit={handleSubmit} className="w-full max-w-lg">
+            <div className="flex items-center space-x-4">
+                <input
+                    type="text"
+                    placeholder="Search City"
+                    value={searchInput}
+                    onChange={(e) => setSearchInput(e.target.value)}
+                    name="q"
+                    className="input input-bordered w-full"
+                />
+                <button
+                    type="submit"
+                    disabled={loading || searchInput.length === 0}
+                    className="btn btn-primary flex items-center justify-center p-0 w-12 h-12"
+                >
+                    {loading ? (
+                        <Iconify icon="svg-spinners:180-ring" width={24} />
+                    ) : (
+                        <Iconify icon="mdi:magnify" width={32} />
+                    )}
+                </button>
+            </div>
             {error && <p className="text-error text-sm">{error}</p>}
-        </div>
+        </Form>
     );
 };
 

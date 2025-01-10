@@ -4,6 +4,7 @@ const API_KEY = 'ceb835a2541349ad07915f4d67aad389'; // hardcoded for demo purpos
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const mapWeatherResponse = (data: any) => {
+    const id = data.id;
     const city = data.name;
     const country = data.sys.country;
     const temp = (data.main.temp - 273.15).toFixed(2);
@@ -14,6 +15,7 @@ export const mapWeatherResponse = (data: any) => {
     const timestamp = new Date().toLocaleString();
 
     return {
+        id,
         city,
         country,
         temp,

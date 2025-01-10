@@ -11,13 +11,13 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
         const isDayTime = currentHour >= 6 && currentHour < 18;
 
         if (!theme) {
-            setTheme(isDayTime ? 'light' : 'dark');
+            setTheme(!isDayTime ? 'light' : 'dark');
         }
 
         // Set the data-theme on html element
         document.documentElement.setAttribute(
             'data-theme',
-            theme || (isDayTime ? 'light' : 'dark')
+            theme || (!isDayTime ? 'light' : 'dark')
         );
 
         // Change the background on the body element

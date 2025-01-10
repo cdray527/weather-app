@@ -2,6 +2,7 @@ import type { Config } from 'tailwindcss';
 
 export default {
     content: ['./app/**/{**,.client,.server}/**/*.{js,jsx,ts,tsx}'],
+    darkMode: ['selector', '[data-theme="dark"]'],
     theme: {
         extend: {
             fontFamily: {
@@ -17,11 +18,14 @@ export default {
                 ]
             },
             colors: {
-                background: {
-                    DEFAULT: 'var(--background)'
+                primary: {
+                    DEFAULT: 'var(--primary)'
                 },
-                foreground: {
-                    DEFAULT: 'var(--foreground)'
+                secondary: {
+                    DEFAULT: 'var(--secondary)'
+                },
+                accent: {
+                    DEFAULT: 'var(--accent)'
                 }
             }
         }
