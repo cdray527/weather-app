@@ -19,13 +19,19 @@ export default {
             },
             colors: {
                 primary: {
-                    DEFAULT: 'var(--primary)'
+                    DEFAULT: 'var(--primary-foreground)',
+                    foreground: 'var(--primary-foreground)',
+                    background: 'var(--primary-background)'
                 },
                 secondary: {
-                    DEFAULT: 'var(--secondary)'
+                    DEFAULT: 'var(--secondary-foreground)',
+                    foreground: 'var(--secondary-foreground)',
+                    background: 'var(--secondary-background)'
                 },
-                accent: {
-                    DEFAULT: 'var(--accent)'
+                tertiary: {
+                    DEFAULT: 'var(--tertiary-foreground)',
+                    foreground: 'var(--tertiary-foreground)',
+                    background: 'var(--tertiary-background)'
                 }
             }
         }

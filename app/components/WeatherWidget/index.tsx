@@ -41,9 +41,9 @@ const WeatherWidget = () => {
     };
 
     return (
-        <div className="flex flex-col items-center space-y-4">
+        <div className="flex flex-col items-center">
             <SearchBar defaultSearchInput={defaultSearchInput} onSubmit={handleSubmit} />
-            <div className={cn(styles.WeatherWidget__container)}>
+            <div className={cn('p-4 mt-14 sm:p-6', styles.WeatherWidget__container)}>
                 <WeatherInfo />
                 <WeatherHistory />
             </div>

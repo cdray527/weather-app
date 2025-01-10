@@ -23,7 +23,7 @@ const SearchBar = ({ defaultSearchInput, onSubmit }: Props) => {
 
     return (
         <Form method="get" onSubmit={handleFormSubmit} className="w-full max-w-lg">
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center">
                 <input
                     type="text"
                     placeholder="Search City"
@@ -35,7 +35,7 @@ const SearchBar = ({ defaultSearchInput, onSubmit }: Props) => {
                 <button
                     type="submit"
                     disabled={loading || searchInput.length === 0}
-                    className="btn btn-primary flex items-center justify-center p-0 w-12 h-12"
+                    className="btn text-primary-foreground bg-primary-background border-none flex items-center justify-center p-0 w-12 h-12 ml-4"
                 >
                     {loading ? (
                         <Iconify icon="svg-spinners:180-ring" width={24} />

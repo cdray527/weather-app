@@ -7,10 +7,10 @@ export const mapWeatherResponse = (data: any) => {
     const id = data.id;
     const city = data.name;
     const country = data.sys.country;
-    const temp = (data.main.temp - 273.15).toFixed(2);
-    const maxTemp = (data.main.temp_max - 273.15).toFixed(2);
-    const minTemp = (data.main.temp_min - 273.15).toFixed(2);
-    const weather = data.weather[0]?.main.toLowerCase();
+    const temp = Math.round(data.main.temp - 273.15);
+    const maxTemp = Math.round(data.main.temp_max - 273.15);
+    const minTemp = Math.round(data.main.temp_min - 273.15);
+    const weather = data.weather[0]?.main;
     const humidity = data.main.humidity;
     const timestamp = new Date().toLocaleString();
 

@@ -44,11 +44,11 @@ export const useWeatherState = () => {
         }
     };
 
-    const selectWeatherItem = (itemId: number) => {
+    const selectWeatherDataById = (itemId: number) => {
         setCurrentWeatherId(itemId);
     };
 
-    const getCurrentWeatherData = useMemo(
+    const selectedWeatherData = useMemo(
         () => weatherHistory.find((item) => item.id === currentWeatherId) || null,
         [weatherHistory, currentWeatherId]
     );
@@ -59,13 +59,16 @@ export const useWeatherState = () => {
             localStorage.getItem(WEATHER_HISTORY_KEY) || '[]'
         ) as IWeatherHistoryItem[];
         setWeatherHistory(savedWeatherHistory);
+        if (savedWeatherHistory.length > 0) {
+            setCurrentWeatherId(savedWeatherHistory[0].id);
+        }
     }, [setWeatherHistory]);
 
     return {
         weatherHistory,
-        getCurrentWeatherData,
+        selectedWeatherData,
         addWeatherData,
         removeWeatherDataById,
-        selectWeatherItem
+        selectWeatherDataById
     };
 };

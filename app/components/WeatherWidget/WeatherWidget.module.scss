@@ -2,10 +2,20 @@
     &__container {
         max-width: 620px;
         width: 100%;
+        min-width: 320px;
         border-radius: 20px;
-        padding: 40px;
         border: 1px solid white;
         background-color: rgba(255, 255, 255, 0.2);
+    }
+}
+
+.WeatherInfo {
+    &__currentWeather {
+        font-weight: bolder;
+    }
+
+    &__imageContainer {
+        position: absolute;
     }
 }
 
@@ -20,7 +30,7 @@
     &__container {
         border-radius: 16px;
         padding: 8px 16px;
-        min-width: 320px;
+        min-height: 64px;
         background-color: rgba(255, 255, 255, 0.8);
     }
 

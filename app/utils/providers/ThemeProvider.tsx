@@ -22,7 +22,7 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
 
         // Change the background on the body element
         const body = document.body;
-        body.style.backgroundImage = `url(${theme === 'light' ? '/bg-light.png' : '/bg-dark.png'})`;
+        body.style.backgroundImage = `url(${theme === 'light' ? '/images/bg-light.png' : '/images/bg-dark.png'})`;
         body.style.backgroundSize = 'cover';
         body.style.backgroundPosition = 'center';
         body.style.transition = 'background 0.3s ease';

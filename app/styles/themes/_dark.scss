@@ -1,4 +1,8 @@
 html[data-theme='dark'] {
-    --primary: #ffffff;
-    --secondary: #7e7b8d;
+    --primary-foreground: #ffffff;
+    --primary-background: #2a2343;
+    --secondary-foreground: #7e7b8d;
+    --secondary-background: #2a2343;
+    --tertiary-foreground: #ffffff;
+    --tertiary-background: #000000;
 }
