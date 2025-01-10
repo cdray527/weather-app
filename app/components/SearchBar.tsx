@@ -25,12 +25,7 @@ const SearchBar = ({ id, defaultSearchInput, onSubmit, className }: Props) => {
     };
 
     return (
-        <Form
-            id={id}
-            method="get"
-            onSubmit={handleFormSubmit}
-            className={cn('w-full', className)}
-        >
+        <Form id={id} method="get" onSubmit={handleFormSubmit} className={cn('w-full', className)}>
             <div className="flex items-center">
                 <input
                     id={`${id}-input`}

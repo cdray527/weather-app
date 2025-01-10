@@ -53,24 +53,18 @@ const WeatherHistoryItem = ({ data }: Props) => {
                     >
                         <div className="modal-box text-secondary-foreground dark:text-primary-foreground bg-secondary-background">
                             <h3 className="font-bold text-lg">Confirmation</h3>
-                            <p className="py-4">
-                                Do you want to remove this from history?
-                            </p>
+                            <p className="py-4">Do you want to remove this from history?</p>
                             <div className="modal-action">
                                 <form method="dialog">
                                     <button
                                         className="btn text-primary-foreground bg-primary-background"
-                                        onClick={() =>
-                                            removeWeatherDataById(data.id)
-                                        }
+                                        onClick={() => removeWeatherDataById(data.id)}
                                     >
                                         Yes
                                     </button>
                                     <button
                                         className="ml-2 btn bg-secondary-background"
-                                        onClick={() =>
-                                            setIsDeleteModalOpen(false)
-                                        }
+                                        onClick={() => setIsDeleteModalOpen(false)}
                                     >
                                         Cancel
                                     </button>

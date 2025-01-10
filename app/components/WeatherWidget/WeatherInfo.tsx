@@ -33,9 +33,7 @@ const WeatherInfo = () => {
                 )}
                 <div className="flex flex-col md:flex-row ">
                     <div className="flex flex-col md:w-1/4">
-                        <div className="text-tertiary">
-                            Today&apos;s Weather
-                        </div>
+                        <div className="text-tertiary">Today&apos;s Weather</div>
                         <div
                             className={cn(
                                 'leading-none text-primary-background dark:text-primary text-7xl sm:text-9xl',
@@ -46,9 +44,7 @@ const WeatherInfo = () => {
                         </div>
                         <div className="dark:text-primary">
                             <span>H: {selectedWeatherData?.maxTemp}&deg;</span>
-                            <span className="pl-2">
-                                L: {selectedWeatherData?.minTemp}&deg;
-                            </span>
+                            <span className="pl-2">L: {selectedWeatherData?.minTemp}&deg;</span>
                         </div>
                     </div>
                 </div>
