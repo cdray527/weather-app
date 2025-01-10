@@ -1,4 +1,4 @@
-import { IWeatherHistoryItem } from '@/utils/type/weatherHistoryItem';
+import { IWeatherHistoryItem } from '@/utils/interface/weatherHistoryItem';
 import Iconify from '@/components/Iconify';
 import cn from 'classnames';
 import styles from './WeatherWidget.module.scss';

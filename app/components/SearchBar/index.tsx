@@ -1,44 +1,28 @@
 import { useState } from 'react';
-import { useSetAtom } from 'jotai';
-import { weatherHistoryState } from '@/utils/atoms/searchState';
-import { Form, useLocation, useNavigate } from '@remix-run/react';
-import { getWeatherByCityCountry, mapWeatherResponse } from '@/utils/services/weatherServices';
-import { IWeatherHistoryItem } from '@/utils/type/weatherHistoryItem';
+import { Form } from '@remix-run/react';
 import Iconify from '@/components/Iconify';
 
-const SearchBar = () => {
-    const location = useLocation();
-    const navigate = useNavigate();
-    const urlParams = new URLSearchParams(location.search);
-    const defaultSearchInput = urlParams.get('q') || '';
+interface Props {
+    defaultSearchInput: string;
+    onSubmit: (
+        searchInput: string,
+        setLoading: React.Dispatch<React.SetStateAction<boolean>>,
+        setError: React.Dispatch<React.SetStateAction<string | null>>
+    ) => void;
+}
+
+const SearchBar = ({ defaultSearchInput, onSubmit }: Props) => {
     const [searchInput, setSearchInput] = useState<string>(defaultSearchInput);
-    const setWeatherData = useSetAtom(weatherHistoryState);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
-    const handleSubmit = async (event: React.FormEvent) => {
+    const handleFormSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-        setLoading(true);
-        setError(null);
-
-        try {
-            const data = await getWeatherByCityCountry(searchInput);
-
-            const newWeatherData: IWeatherHistoryItem = mapWeatherResponse(data);
-
-            // Update weatherHistoryState with new data
-            setWeatherData((prevWeatherData) => [...prevWeatherData, newWeatherData]);
-
-            navigate(`/?q=${searchInput}`);
-        } catch (err) {
-            setError('Unable to fetch weather data. Please try again later.');
-        } finally {
-            setLoading(false);
-        }
+        onSubmit(searchInput, setLoading, setError); // Pass down the setLoading and setError functions
     };
 
     return (
-        <Form method="get" onSubmit={handleSubmit} className="w-full max-w-lg">
+        <Form method="get" onSubmit={handleFormSubmit} className="w-full max-w-lg">
             <div className="flex items-center space-x-4">
                 <input
                     type="text"

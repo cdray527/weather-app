@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import { useAtom } from 'jotai';
 import WeatherHistoryItem from './WeatherHistoryItem';
-import { weatherHistoryState } from '@/utils/atoms/searchState';
+import { weatherHistoryState } from '@/utils/atoms/weatherState';
 import cn from 'classnames';
 import styles from './WeatherWidget.module.scss';
-import { IWeatherHistoryItem } from '@/utils/type/weatherHistoryItem';
+import { IWeatherHistoryItem } from '@/utils/interface/weatherHistoryItem';
 
 const WeatherHistory = () => {
     const [weatherData] = useAtom(weatherHistoryState);
