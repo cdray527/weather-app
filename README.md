@@ -1,6 +1,6 @@
 # Weather App
 
-A simple weather application built with Remix and Jotai
+A simple weather application built with Remix and DaisyUI, featuring state management powered by Jotai.
 
 ## Features
 
