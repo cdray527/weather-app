@@ -5,7 +5,7 @@ A simple weather application built with Remix and Jotai
 ## Features
 
 - **Check Current Weather:** Search for the current weather by city and country.
-- **Theme Toggle:** Switch between light and dark themes. Default Theme select base on
+- **Theme Toggle:** Switch between light and dark themes. Default Theme based on user's current location time.
 - **Manage Weather History:**
     - Delete specific weather history items.
     - Refresh weather data for any saved location.
