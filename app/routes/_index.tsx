@@ -13,7 +13,7 @@ export default function Index() {
     return (
         <>
             <main className="flex min-h-screen flex-col justify-center p-2 sm:p-8">
-                <section className="pt-2 pb-4 flex justify-end">
+                <section className="absolute top-5 right-5">
                     <ThemeController
                         id="weather-widget-theme-switcher"
                         defaultValue={theme === 'dark' ? true : false}

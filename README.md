@@ -1,14 +1,28 @@
-# Welcome to Remix!
+# Weather App
 
-- 📖 [Remix docs](https://remix.run/docs)
+A simple weather application built with Remix and Jotai
 
+## Features
+
+- **Check Current Weather:** Search for the current weather by city and country.
+- **Theme Toggle:** Switch between light and dark themes. Default Theme select base on
+- **Manage Weather History:**
+    - Delete specific weather history items.
+    - Refresh weather data for any saved location.
+
+## Development
+
+To start the development server:
+
+````bash
+npm run dev
 ## Development
 
 Run the dev server:
 
 ```shellscript
 npm run dev
-```
+````
 
 ## Deployment
 
@@ -23,8 +37,6 @@ Then run the app in production mode:
 ```sh
 npm start
 ```
-
-Now you'll need to pick a host to deploy it to.
 
 ### DIY
 
