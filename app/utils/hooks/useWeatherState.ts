@@ -3,6 +3,7 @@ import { useAtom, useAtomValue } from 'jotai';
 import { selectAtom } from 'jotai/utils';
 import { weatherHistoryAtom, currentWeatherIdAtom } from '@/utils/atoms/weatherState';
 import { IWeatherHistoryItem } from '@/utils/interface/IWeatherHistoryItem';
+import { getWeatherByCityCountry, mapWeatherResponse } from '../services/weatherServices';
 
 const WEATHER_HISTORY_STORAGE_KEY = 'weatherHistory';
 
@@ -10,11 +11,11 @@ export const useWeatherState = () => {
     const [weatherHistory, setWeatherHistory] = useAtom(weatherHistoryAtom);
     const [currentWeatherId, setCurrentWeatherId] = useAtom(currentWeatherIdAtom);
 
-    // Use selectAtom to derive selectedWeatherData from
+    // Use selectAtom to derive selectedWeatherData
     const selectedWeatherHistoryAtom = useMemo(() => {
         return selectAtom(
             weatherHistoryAtom,
-            (weatherHistory) => weatherHistory.find((item) => item.id === currentWeatherId) || null
+            (weatherHistory) => weatherHistory.find((data) => data.id === currentWeatherId) || null
         );
     }, [currentWeatherId]);
     const selectedWeatherData = useAtomValue(selectedWeatherHistoryAtom);
@@ -30,47 +31,68 @@ export const useWeatherState = () => {
         }
     }, []);
 
-    const addWeatherData = (item: IWeatherHistoryItem) => {
-        console.log('new item:', item);
-        setWeatherHistory((prev) => {
-            const updatedWeatherHistory = prev.map((weather) =>
-                weather.id === item.id ? item : weather
-            );
-
-            // If the item doesn't exist, add it else replace it
-            const isNewItem = !updatedWeatherHistory.some((weather) => weather.id === item.id);
+    const addWeatherData = (newData: IWeatherHistoryItem) => {
+        console.log('new item:', newData);
+        setWeatherHistory((currentDataList) => {
+            // If the item doesn't exist add into list
+            const isNewItem = !currentDataList.some((data) => data.id === newData.id);
             if (isNewItem) {
-                updatedWeatherHistory.unshift(item);
+                currentDataList.unshift(newData);
             }
-            setCurrentWeatherId(item.id);
+            setCurrentWeatherId(newData.id);
 
-            localStorage.setItem(
-                WEATHER_HISTORY_STORAGE_KEY,
-                JSON.stringify(updatedWeatherHistory)
-            );
+            localStorage.setItem(WEATHER_HISTORY_STORAGE_KEY, JSON.stringify(currentDataList));
 
-            return updatedWeatherHistory;
+            return currentDataList;
         });
     };
 
     const removeWeatherDataById = (itemId: number) => {
         console.log('removing item:', itemId);
 
-        setWeatherHistory((prev) => {
-            const updatedWeatherHistory = prev.filter((item) => item.id !== itemId);
-            if (currentWeatherId === itemId && updatedWeatherHistory.length > 0) {
-                setCurrentWeatherId(updatedWeatherHistory[0].id);
-            } else if (updatedWeatherHistory.length === 0) {
+        setWeatherHistory((currentDataList) => {
+            const newDataList = currentDataList.filter((data) => data.id !== itemId);
+            if (currentWeatherId === itemId && newDataList.length > 0) {
+                setCurrentWeatherId(newDataList[0].id);
+            } else if (newDataList.length === 0) {
                 setCurrentWeatherId(null);
             }
 
-            localStorage.setItem(
-                WEATHER_HISTORY_STORAGE_KEY,
-                JSON.stringify(updatedWeatherHistory)
-            );
+            localStorage.setItem(WEATHER_HISTORY_STORAGE_KEY, JSON.stringify(newDataList));
 
-            return updatedWeatherHistory;
+            return newDataList;
         });
+    };
+
+    const refreshWeatherData = async (itemId: number) => {
+        console.log('refresh item:', itemId);
+
+        // Retrieve the specific item from weatherHistory
+        const existingData = weatherHistory.find((item) => item.id === itemId);
+        if (!existingData) {
+            console.error('refreshWeatherData error : Item not found in weather history');
+            return;
+        }
+
+        const { city, country } = existingData;
+        const previousInput = `${city}, ${country}`;
+
+        try {
+            const data = await getWeatherByCityCountry(previousInput);
+            const refreshedData = mapWeatherResponse(data);
+
+            setWeatherHistory((currentDataList) => {
+                const newDataList = currentDataList.map((data) =>
+                    data.id === itemId ? { ...data, ...refreshedData } : data
+                );
+
+                localStorage.setItem(WEATHER_HISTORY_STORAGE_KEY, JSON.stringify(newDataList));
+
+                return newDataList;
+            });
+        } catch (err) {
+            console.error('refreshWeatherData error:', err);
+        }
     };
 
     return {
@@ -78,6 +100,8 @@ export const useWeatherState = () => {
         selectedWeatherData,
         addWeatherData,
         removeWeatherDataById,
+        refreshWeatherData,
+        currentWeatherId,
         setCurrentWeatherId
     };
 };

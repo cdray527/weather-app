@@ -1,0 +1,7 @@
+.SearchBar {
+    &__input {
+        &:not(:focus) {
+            opacity: 0.5;
+        }
+    }
+}

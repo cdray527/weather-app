@@ -41,6 +41,7 @@ const ThemeController = ({ id, defaultValue, onChange }: Props) => {
                 type="checkbox"
                 onChange={(e) => handleOnChange(e)}
                 value="synthwave"
+                aria-label="Theme toggler"
                 className="toggle theme-controller"
                 checked={isChecked}
             />

@@ -36,7 +36,7 @@ const WeatherInfo = () => {
                         <div className="text-tertiary">Today&apos;s Weather</div>
                         <div
                             className={cn(
-                                'leading-none text-primary-background dark:text-primary text-7xl sm:text-9xl',
+                                'leading-none text-primary text-7xl sm:text-9xl',
                                 styles.WeatherInfo__currentWeather
                             )}
                         >

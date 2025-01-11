@@ -2,6 +2,7 @@ import { useState } from 'react';
 import cn from 'classnames';
 import { Form } from '@remix-run/react';
 import Iconify from '@/components/Iconify';
+import styles from './SearchBar.module.scss';
 
 interface Props {
     id: string;
@@ -34,13 +35,14 @@ const SearchBar = ({ id, defaultSearchInput, onSubmit, className }: Props) => {
                     value={searchInput}
                     onChange={(e) => setSearchInput(e.target.value)}
                     name="q"
-                    className="input input-bordered w-full"
+                    className={cn('input input-bordered w-full', styles.SearchBar__input)}
                 />
                 <button
                     id={`${id}-button`}
                     type="submit"
+                    aria-label="Search weather"
                     disabled={loading || searchInput.length === 0}
-                    className="btn text-primary-foreground bg-primary-background border-none flex items-center justify-center p-0 w-12 h-12 ml-4"
+                    className="btn text-primary-background bg-primary-foreground dark:text-primary-foreground dark:bg-primary-background border-none flex items-center justify-center p-0 w-12 h-12 ml-4"
                 >
                     {loading ? (
                         <Iconify icon="svg-spinners:180-ring" width={24} />
