@@ -1,0 +1,73 @@
+.WeatherWidget {
+    &__searchBarContainer {
+        max-width: 620px;
+        width: 100%;
+        min-width: 320px;
+    }
+
+    &__container {
+        max-width: 620px;
+        width: 100%;
+        min-width: 320px;
+        border-radius: 20px;
+        border: 1px solid white;
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+}
+
+.WeatherInfo {
+    &__currentWeather {
+        font-weight: bolder;
+    }
+
+    &__imageContainer {
+        position: absolute;
+    }
+}
+
+.WeatherHistory {
+    &__container {
+        border-radius: 20px;
+        background-color: rgba(255, 255, 255, 0.5);
+    }
+}
+
+.WeatherHistoryItem {
+    &__container {
+        border-radius: 16px;
+        padding: 8px 16px;
+        min-height: 64px;
+        background-color: rgba(255, 255, 255, 0.8);
+
+        &_selected {
+            border: 1px solid var(--primary-foreground);
+        }
+    }
+
+    &__button {
+        border-color: var(--secondary);
+        border-radius: 32px;
+        width: 50px;
+        padding: 8px;
+    }
+}
+
+html[data-theme='dark'] {
+    & .WeatherWidget {
+        &__container {
+            background-color: rgba(26, 26, 26, 0.3);
+        }
+    }
+
+    & .WeatherHistory {
+        &__container {
+            background-color: rgba(26, 26, 26, 0.5);
+        }
+    }
+
+    & .WeatherHistoryItem {
+        &__container {
+            background-color: rgba(26, 26, 26, 0.8);
+        }
+    }
+}
